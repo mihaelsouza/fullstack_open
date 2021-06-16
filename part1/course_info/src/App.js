@@ -12,8 +12,20 @@ const Content = (props) => {
   return (
     <>
       {props.content.map((item, idx) => {
-        return <p key={idx}>{item.part} {item.exercises}</p>;
+        return <Part
+          key={idx}
+          part={item.part}
+          exercises={item.exercises}
+        />;
       })}
+    </>
+  );
+}
+
+const Part = (props) => {
+  return (
+    <>
+      <p>{props.part} {props.exercises}</p>
     </>
   );
 }
