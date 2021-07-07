@@ -6,6 +6,16 @@ const Button = ({ handleClick, text }) => {
     >{text}</button>;
 }
 
+const Anecdote = ({ header, text, voteCount }) => {
+  return (
+    <div>
+      <h1>{header}</h1>
+      <p>{text}</p>
+      <p>{`has ${voteCount} votes`}</p>
+    </div>
+  );
+}
+
 const App = () => {
   const anecdotes = [
     'If it hurts, do it more often',
@@ -20,6 +30,7 @@ const App = () => {
   const [selected, setSelected] = useState({
     index: 0,
     votes: Array(anecdotes.length).fill(0),
+    mostVotes: 0,
   })
 
   const handleNext = () => {
@@ -36,15 +47,25 @@ const App = () => {
     setSelected({
       ...selected,
       votes: votes,
+      mostVotes:
+        votes[selected.index] > votes[selected.mostVotes] ? selected.index : selected.mostVotes,
     });
   };
 
   return (
     <div>
-      <p>{anecdotes[selected.index]}</p>
-      <p>{`has ${selected.votes[selected.index]} votes`}</p>
+      <Anecdote
+        header="Anecdote of the day"
+        text={anecdotes[selected.index]}
+        voteCount={selected.votes[selected.index]}
+      />
       <Button text="vote" handleClick={handleVote}/>
       <Button text="next anecdote" handleClick={handleNext}/>
+      <Anecdote
+        header="Anecdote with most votes"
+        text={anecdotes[selected.mostVotes]}
+        voteCount={selected.votes[selected.mostVotes]}
+      />
     </div>
   )
 }
