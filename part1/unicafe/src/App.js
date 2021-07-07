@@ -11,12 +11,19 @@ const Display = ({ text, values }) => {
     lineHeight: 0,
   }
 
+  const total = Object.values(values).reduce((acc,val) => acc + val);
+  const average = (values.good - values.bad) / total;
+  const positive = values.good / total * 100;
+
   return (
     <>
       <h1>{text}</h1>
       <p style={style}>good: {values.good}</p>
       <p style={style}>neutral: {values.neutral}</p>
       <p style={style}>bad: {values.bad}</p>
+      <p style={style}>all: {total}</p>
+      <p style={style}>average: {average}</p>
+      <p style={style}>positive: {`${positive} %`}</p>
     </>
   );
 };
@@ -29,7 +36,7 @@ const App = () => {
   const stats = {
     good: good,
     neutral: neutral,
-    bad: bad
+    bad: bad,
   };
 
   return (
