@@ -16,24 +16,32 @@ const Statistics = ({ text, values }) => {
       <h1>{text}</h1>
       {
         total > 0 ? (
-          <>
-            <Statistic text="good" value={values.good}/>
-            <Statistic text="neutral" value={values.neutral}/>
-            <Statistic text="bad" value={values.bad}/>
-            <Statistic text="total" value={total}/>
-            <Statistic text="average" value={average}/>
-            <Statistic text="positive" value={`${positive} %`}/>
-          </>
+          <table>
+            <tbody>
+              <Statistic text="good" value={values.good}/>
+              <Statistic text="neutral" value={values.neutral}/>
+              <Statistic text="bad" value={values.bad}/>
+              <Statistic text="total" value={total}/>
+              <Statistic text="average" value={average}/>
+              <Statistic text="positive" value={`${positive} %`}/>
+            </tbody>
+          </table>
         ) : (
-          <p style={{ lineHeight: 0 }}>No feedback given</p>
+          <p>No feedback given</p>
         )
       }
     </div>
   );
 };
 
-const Statistic = ({ text, value }) =>
-  <p style={{ lineHeight: 0 }}>{`${text}: ${value}`}</p>;
+const Statistic = ({ text, value }) => {
+  return (
+    <tr>
+      <td>{text}</td>
+      <td>{value}</td>
+    </tr>
+  )
+};
 
 const App = () => {
   const [good, setGood] = useState(0);
