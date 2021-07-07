@@ -7,10 +7,6 @@ const Button = ({ handleClick, text }) => {
 };
 
 const Statistics = ({ text, values }) => {
-  const style = {
-    lineHeight: 0,
-  }
-
   const total = Object.values(values).reduce((acc,val) => acc + val);
   const average = (values.good - values.bad) / total;
   const positive = values.good / total * 100;
@@ -21,20 +17,23 @@ const Statistics = ({ text, values }) => {
       {
         total > 0 ? (
           <>
-            <p style={style}>good: {values.good}</p>
-            <p style={style}>neutral: {values.neutral}</p>
-            <p style={style}>bad: {values.bad}</p>
-            <p style={style}>all: {total}</p>
-            <p style={style}>average: {average}</p>
-            <p style={style}>positive: {`${positive} %`}</p>
+            <Statistic text="good" value={values.good}/>
+            <Statistic text="neutral" value={values.neutral}/>
+            <Statistic text="bad" value={values.bad}/>
+            <Statistic text="total" value={total}/>
+            <Statistic text="average" value={average}/>
+            <Statistic text="positive" value={`${positive} %`}/>
           </>
         ) : (
-          <p style={style}>No feedback given</p>
+          <p style={{ lineHeight: 0 }}>No feedback given</p>
         )
       }
     </div>
   );
 };
+
+const Statistic = ({ text, value }) =>
+  <p style={{ lineHeight: 0 }}>{`${text}: ${value}`}</p>;
 
 const App = () => {
   const [good, setGood] = useState(0);
