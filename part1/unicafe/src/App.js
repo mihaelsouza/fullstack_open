@@ -55,7 +55,7 @@ const App = () => {
   };
 
   return (
-    <div className="App">
+    <div>
       <h1>give feedback</h1>
       <Button handleClick={() => setGood(good + 1)} text="good"/>
       <Button handleClick={() => setNeutral(neutral + 1)} text="neutral"/>
