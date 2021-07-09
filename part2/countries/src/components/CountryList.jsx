@@ -2,12 +2,18 @@ import React from 'react'
 import CountryDetails from './CountryDetails';
 
 const CountryList = ({ countries }) => {
+
+
   return (
     <div>
       {
         countries.length > 1
-          ? countries.map((country) => <li key={country.numericCode}>{country.name}</li>)
-          : <CountryDetails country={countries[0]}/>
+          ? countries.map((country) =>
+            <div key={country.numericCode}>
+              <CountryDetails country={country} initialDisplay={false}/>
+            </div>
+          )
+          : <CountryDetails country={countries[0]} initialDisplay={true}/>
       }
     </div>
   )

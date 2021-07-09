@@ -1,11 +1,25 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
-const CountryDetails = ({ country }) => {
+const CountryDetails = ({ country, initialDisplay }) => {
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    if (initialDisplay) setShow(true);
+  }, [initialDisplay]);
 
   return (
     <>
       {
-        country ? (
+        !initialDisplay ? (
+          <div>
+            <span>{country.name}</span>
+            <button onClick={() => setShow(!show)}>{show ? 'hide' : 'show'}</button>
+          </div>
+        )
+        : <></>
+      }
+      {
+        country && show ? (
           <div>
             <h2>{country.name}</h2>
             <p>Capital: {country.capital}</p>
