@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 import Filter from './components/Filter';
 import AddEntry from './components/AddEntry';
@@ -8,14 +9,18 @@ const App = () => {
   const [filter, setFilter] = useState('');
   const [newPerson, setNewPerson] = useState('');
   const [newNumber, setNewNumber] = useState('');
-
-  const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', number: '040-123456' },
-    { name: 'Ada Lovelace', number: '39-44-5323523' },
-    { name: 'Dan Abramov', number: '12-43-234345' },
-    { name: 'Mary Poppendieck', number: '39-23-6423122' },
-  ]);
+  const [persons, setPersons] = useState([]);
   const [peopleToShow, setPeopleToShow] = useState(persons);
+
+  useEffect(() => {
+    axios.get('http://localhost:3001/persons')
+      .then(res => setPersons(res.data));
+  }, []);
+
+  useEffect(() => {
+    setPeopleToShow(persons);
+    setFilter('');
+  }, [persons]);
 
   const checkName = (newName, nameList) => {
     const nameInList = nameList.filter((name) => name.name === newName);
@@ -46,11 +51,6 @@ const App = () => {
     if (checkName(newPerson, persons)) alert(`${newPerson} is already in phonebook!`);
     else {
       setPersons([
-        ...persons,
-        person
-      ]);
-
-      setPeopleToShow([
         ...persons,
         person
       ]);
