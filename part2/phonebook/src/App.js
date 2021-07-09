@@ -6,6 +6,11 @@ const App = () => {
     {name: 'Arto Hellas'},
   ]);
 
+  const checkName = (newName, nameList) => {
+    const nameInList = nameList.filter((name) => name.name === newName);
+    return nameInList.length ? true : false;
+  }
+
   const handleChange = (event) => {
     setNewPerson(event.target.value);
   };
@@ -13,10 +18,11 @@ const App = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    setPersons([
-      ...persons,
-      {name: newPerson}
-    ]);
+    if (checkName(newPerson, persons)) alert(`${newPerson} is already in phonebook!`);
+    else setPersons([
+        ...persons,
+        {name: newPerson}
+      ]);
 
     setNewPerson('');
   };
