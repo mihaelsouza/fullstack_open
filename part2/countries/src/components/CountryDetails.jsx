@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
+import WeatherDetails from './WeatherDetails';
 
 const CountryDetails = ({ country, initialDisplay }) => {
   const [show, setShow] = useState(false);
@@ -28,7 +29,8 @@ const CountryDetails = ({ country, initialDisplay }) => {
             <ul>
                 {country.languages.map((language) => <li key={language.name}>{language.name}</li>)}
             </ul>
-            <img src={country.flag} alt="country flag"/>
+            <img src={country.flag} alt="country flag" width={300} height={200}/>
+            <WeatherDetails city={country.capital}/>
           </div>
         ) : <></>
       }
