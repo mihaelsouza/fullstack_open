@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 
+import Filter from './components/Filter';
+import AddEntry from './components/AddEntry';
+import NumberList from './components/NumberList';
+
 const App = () => {
+  const [filter, setFilter] = useState('');
   const [newPerson, setNewPerson] = useState('');
   const [newNumber, setNewNumber] = useState('');
-  const [filter, setFilter] = useState('');
 
   const [persons, setPersons] = useState([
     { name: 'Arto Hellas', number: '040-123456' },
@@ -37,12 +41,20 @@ const App = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    const person = {name: newPerson, number: newNumber};
 
     if (checkName(newPerson, persons)) alert(`${newPerson} is already in phonebook!`);
-    else setPersons([
+    else {
+      setPersons([
         ...persons,
-        {name: newPerson, number: newNumber}
+        person
       ]);
+
+      setPeopleToShow([
+        ...persons,
+        person
+      ]);
+    }
 
     setNewPerson('');
     setNewNumber('');
@@ -51,28 +63,14 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <div>
-        Filter shown with:
-        <input value={filter} onChange={handleFilter}/>
-      </div>
+      <Filter filter={filter} handleChange={handleFilter} />
       <h3>add new</h3>
-      <form onSubmit={handleSubmit}>
-        <div>
-          Name:
-          <input value={newPerson} onChange={(ev) => handleChange(ev, setNewPerson)}/>
-        </div>
-        <div>
-          Phone Number:
-          <input value={newNumber} onChange={(ev) => handleChange(ev, setNewNumber)}/>
-        </div>
-        <button type="submit">add</button>
-      </form>
-      <h2>Numbers</h2>
-      <ul>
-        {
-          peopleToShow.map((person) => <li key={person.name}>{`${person.name} ${person.number}`}</li>)
-        }
-      </ul>
+      <AddEntry
+        person={newPerson} setPerson={setNewPerson}
+        number={newNumber} setNumber={setNewNumber}
+        handleChange={handleChange} handleSubmit={handleSubmit}
+      />
+      <NumberList people={peopleToShow} />
     </div>
   );
 };
